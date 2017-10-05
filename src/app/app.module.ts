@@ -4,12 +4,27 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { ProductosPage, ContenidoModal } from '../pages/productos/productos';
+import { Facebook } from '@ionic-native/facebook';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { HttpModule } from '@angular/http';
 import { ProductosServiceProvider } from '../providers/productos-service/productos-service';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { LoginPage } from '../pages/login/login';
+import { UserProvider } from '../providers/user/user';
+import { PerfilPage } from '../pages/perfil/perfil';
+import {
+ GoogleMaps,
+ GoogleMap,
+ GoogleMapsEvent,
+ GoogleMapOptions,
+ CameraPosition,
+ MarkerOptions,
+ Marker
+} from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2qjKQxPbLWtI2tnb4U8azGrm_aBrT6C4",
@@ -25,13 +40,16 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     ProductosPage,
-    ContenidoModal
+    ContenidoModal,
+    LoginPage,
+    PerfilPage
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    HttpModule,
     AngularFireDatabaseModule,
   ],
   bootstrap: [IonicApp],
@@ -39,11 +57,19 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     ProductosPage,
-    ContenidoModal
+    ContenidoModal,
+    LoginPage,
+    PerfilPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
+    Geolocation,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserProvider,
+    GoogleMaps,
+
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProductosServiceProvider
   ]

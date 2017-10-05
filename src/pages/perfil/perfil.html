@@ -1,0 +1,46 @@
+<!--
+  Generated template for the PerfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf= "user">
+      {{user.nombre}}
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-list>
+    <ion-item>
+      <ion-label color="primary" stacked>Telefono</ion-label>
+      <ion-input [(ngModel)]="user.telefono" type="tel" placeholder="Numero de telefono"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Fecha de Nacimiento</ion-label>
+      <ion-input [(ngModel)]="user.fecha_nacimiento" type="date" placeholder="dd/mm/aaaa"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Sexo</ion-label>
+    </ion-item>
+    <ion-list radio-group>
+
+
+      <ion-item>
+        <ion-label>Masculino</ion-label>
+        <ion-radio (ionSelect)="updateSexo('Masculino')"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Femenino</ion-label>
+        <ion-radio (ionSelect)="updateSexo('Femenino')"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </ion-list> 
+
+</ion-content>
