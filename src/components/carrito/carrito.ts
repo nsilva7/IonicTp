@@ -31,7 +31,7 @@ actualizarCarrito() {
 });
 }
 ngOnInit() {
-  this.carritoService.agregarProducto$.subscribe(res => {
+  this.carritoService.cambios$.subscribe(res => {
     this.actualizarCarrito();
     console.log("se actualizo el carrito");
   })

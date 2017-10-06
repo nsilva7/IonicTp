@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ProductosPage } from '../pages/productos/productos';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
+import { CheckoutPage } from '../pages/checkout/checkout';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { CarritoProvider } from '../providers/carrito/carrito';
@@ -25,7 +26,7 @@ export class MyApp {
       {titulo:"Inicio",componente:HomePage,icon:"home"},
       {titulo:"Mi Perfil",componente:PerfilPage,icon:"person"},
       {titulo:"Productos",componente:ProductosPage,icon:"basket"},
-      //{titulo:"Acerca de",componente:AcercaPage,icon:"information-circle"}
+      {titulo:"Checkout",componente:CheckoutPage,icon:"information-circle"}
     ]
     this.afAuth.authState.subscribe(auth => {
       if(!auth) {
@@ -47,7 +48,7 @@ export class MyApp {
   }
 
   ngOnInit(){
-    this.carritoService.agregarProducto$.subscribe(res => {
+    this.carritoService.cambios$.subscribe(res => {
       this.afAuth.authState.subscribe(auth => {
         this.carritoService.getCarrito(auth.uid).then(res => {
           for(let key in res){

@@ -7,12 +7,28 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>checkout</ion-title>
+    <ion-title *ngIf= "user">
+      {{user.nombre}}
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+<div *ngIf="carrito">
+  <ion-card *ngFor="let item of carrito.items">
+    <div *ngIf="item.producto">
+      <ion-list>
+        <ion-item>
+          <ion-avatar item-start><img src={{item.producto.foto[0]}}> </ion-avatar>
+          {{item.producto.nombre}}<br />
+          cantidad: {{item.cantidad}}<br />
+          precio: {{item.producto.precio}}
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-card>
+  <button ion-button (click)="checkout()">Checkout</button>
+  </div>
 </ion-content>

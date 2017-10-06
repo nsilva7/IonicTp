@@ -15,6 +15,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { CheckoutPage } from '../pages/checkout/checkout';
 import {
  GoogleMaps,
  GoogleMap,
@@ -45,7 +46,8 @@ export const firebaseConfig = {
     ContenidoModal,
     LoginPage,
     PerfilPage,
-    CarritoComponent
+    CarritoComponent,
+    CheckoutPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ export const firebaseConfig = {
     ProductosPage,
     ContenidoModal,
     LoginPage,
-    PerfilPage
+    PerfilPage,
+    CheckoutPage
   ],
   providers: [
     StatusBar,

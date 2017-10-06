@@ -19,15 +19,11 @@ export class CarritoProvider {
    private carrito = new Carrito();
    private lista = [];
    private cid:string;
-   private agregarProductoSource = new Subject<Item>();
-   private asignarDueñoSource = new Subject<string>();
    private cambiosSource = new Subject<string>();
    private checkoutSource = new Subject<string>();
 
-   agregarProducto$ = this.agregarProductoSource.asObservable();
-   asignarDueño$ = this.asignarDueñoSource.asObservable();
    cambios$ = this.cambiosSource.asObservable();
-   checkout$ = this.cambiosSource.asObservable();
+   checkout$ = this.checkoutSource.asObservable();
 
 
   constructor(private http: Http,private userService:UserProvider) {
@@ -45,7 +41,7 @@ export class CarritoProvider {
           this.carrito.items.push(item);
           this.carrito.cantidadItems= +this.carrito.cantidadItems+item.cantidad*1;
           this.http.put("https://tarea-fe.firebaseio.com/api/carritos/"+this.cid+".json",this.carrito).subscribe();
-          this.agregarProductoSource.next(item);
+          this.cambiosSource.next();
       });
     });
     }else {
@@ -75,7 +71,7 @@ export class CarritoProvider {
     }
 
     checkout() {
-        this.checkoutSource.next("checkout");
+        this.vaciarCarrito();
     }
 
   tieneCarrito(uid:string) {
@@ -92,17 +88,23 @@ export class CarritoProvider {
     }
 
 
-  vaciarCarrito(carrito:Carrito){
-    carrito.cantidadItems= 0;
-    while( carrito.items.length != 0) {
-      carrito.items.pop();
-    }
-    carrito.montoTotal = 0;
-    console.log(carrito);
-    localStorage.setItem("carrito",JSON.stringify(carrito));
-      let key = localStorage.getItem("carritoId");
-    console.log(`https://tarea-fe.firebaseio.com/api/carritos/${key}`);
-    this.http.put(`https://tarea-fe.firebaseio.com/api/carritos/${key}.json`,carrito).subscribe();
+  vaciarCarrito(){
+    this.userService.getUser().subscribe(user => {
+      this.getCarrito(user.uid).then(res => {
+        for(let key in res){
+          this.carrito = res[key];
+          this.cid = key;
+          break;
+        }
+        for(let key in this.carrito.items) {
+          this.carrito.items.pop();
+        }
+        this.carrito.cantidadItems= 0;
+        this.http.put("https://tarea-fe.firebaseio.com/api/carritos/"+this.cid+".json",this.carrito).subscribe();
+        this.checkoutSource.next();
+        this.cambiosSource.next();
+    });
+  });
   }
 
 }
