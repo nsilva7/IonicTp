@@ -1,0 +1,81 @@
+
+  <ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Detalles
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{productoSeleccionado.foto[0]}}">
+        </ion-avatar>
+        <h2>{{productoSeleccionado.nombre}}</h2>
+      </ion-item>
+      <ion-item>
+        <img src={{fotoActual}}/>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail item-start *ngFor = "let foto of productoSeleccionado.foto" (click)="cambiarFoto(foto)">
+          <img src={{foto}}>
+        </ion-thumbnail>
+      </ion-item>
+      <ion-item>
+        <p>Descripcion: {{productoSeleccionado.descripcion}}</p>
+      </ion-item>
+      <ion-item>
+        <p>Precio: {{productoSeleccionado.precio}} $</p>
+      </ion-item>
+      <ion-item>
+        <p>Stock: {{productoSeleccionado.stock}}</p>
+      </ion-item>
+      <ion-item>
+        <p>Dimensiones: {{productoSeleccionado.dimensiones}}</p>
+      </ion-item>
+      <ion-item>
+        <p>Peso: {{productoSeleccionado.peso}}Kg</p>
+      </ion-item>
+      <ion-item>
+        <p>Caracteristicas: <br>{{productoSeleccionado.caracteristicas}}</p>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="cantidad" placeholder="Cantidad" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <p> Agregar al carrito
+          <button ion-button color="blue" outline>
+            <ion-icon md="md-cart"></ion-icon>
+          </button>
+        </p>
+      </ion-item>
+      <ion-item><div class="estrellas">
+        <ion-icon [name]="starIcon[0]" class="star-vacio" (click)="pintarEstrellas('0')"></ion-icon>
+        <ion-icon [name]="starIcon[1]" class="star-vacio" (click)="pintarEstrellas('1')"></ion-icon>
+        <ion-icon [name]="starIcon[2]" class="star-vacio" (click)="pintarEstrellas('2')"></ion-icon>
+        <ion-icon [name]="starIcon[3]" class="star-vacio" (click)="pintarEstrellas('3')"></ion-icon>
+        <ion-icon [name]="starIcon[4]" class="star-vacio" (click)="pintarEstrellas('4')"></ion-icon>
+        <button id="btnPuntuar" ion-button color="blue" outline (click)="puntuar()">Puntuar producto</button>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-textarea placeholder="Comentario" type="text" [(ngModel)]="nuevoComentario"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <p><button ion-button color="blue" outline (click)="addComentario()">Añadir comentario</button></p>
+      </ion-item>
+      <ion-item>
+        <p>Comentarios:</p>
+        <p *ngFor="let comment of productoSeleccionado.comentarios">
+          {{comment}}
+        </p>
+      </ion-item>
+    </ion-list>
+  </ion-content>

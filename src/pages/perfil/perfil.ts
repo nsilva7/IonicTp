@@ -34,18 +34,18 @@ export class PerfilPage {
 
   ngOnInit() {
     this.userService.getUser().subscribe(user => this.user.nombre = user.displayName);
- }
+  }
+  guardarUser(){
+    this.userService.getUser().subscribe(user =>{
+      this.user.id = user.uid;
+      this.userService.guardarUser(this.user);
+    });
+  }
 
- ionViewDidLoad() {
-
+  ionViewDidLoad() {
   }
 
   updateSexo(sexo) {
-
-      this.user.sexo=sexo;
-      console.log(this.user);
-
+    this.user.sexo=sexo;
   }
-
-
 }

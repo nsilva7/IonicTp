@@ -30,8 +30,6 @@
       <ion-label color="primary" stacked>Sexo</ion-label>
     </ion-item>
     <ion-list radio-group>
-
-
       <ion-item>
         <ion-label>Masculino</ion-label>
         <ion-radio (ionSelect)="updateSexo('Masculino')"></ion-radio>
@@ -40,7 +38,10 @@
         <ion-label>Femenino</ion-label>
         <ion-radio (ionSelect)="updateSexo('Femenino')"></ion-radio>
       </ion-item>
+      <ion-item>
+        <button ion-button color="blue" outline (click)="guardarUser()">Guardar</button>
+      </ion-item>
     </ion-list>
-  </ion-list> 
+  </ion-list>
 
 </ion-content>

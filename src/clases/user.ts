@@ -1,4 +1,5 @@
 export class User{
+  id:string;
   nombre:string;
   telefono:string;
   fecha_nacimiento:Date;

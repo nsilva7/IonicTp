@@ -19,5 +19,27 @@ export class ProductosServiceProvider {
   getProductos() {
     return this.http.get(this.productosUrl).map(res => res.json(),error => console.log(error)).toPromise();
   }
-
+  puntuar(codigo, puntuacion){
+    let body = {puntuacion:puntuacion};
+    console.log(body);
+    this.http.get(this.productosUrl+"?orderBy=\"codigo\"&equalTo=\""+codigo+"\"").subscribe(res => {
+      let data = res.json();
+      for( let key in data){
+        var url = "https://tarea-fe.firebaseio.com/api/productos/"+key+".json";
+        this.http.patch(url, body).subscribe(res => console.log(res));
+        break;
+      }
+    });
+  }
+  addComentario(nuevoComentario, codigo){
+    this.http.get(this.productosUrl+"?orderBy=\"codigo\"&equalTo=\""+codigo+"\"").subscribe(res => {
+      let data = res.json();
+      for( let key in data){
+        data[key].comentarios.push(nuevoComentario);
+        var url = "https://tarea-fe.firebaseio.com/api/productos/"+key+"/comentarios"+".json";
+        this.http.put(url, data[key].comentarios).subscribe(res => console.log(res));
+        break;
+      }
+    });
+  }
 }
