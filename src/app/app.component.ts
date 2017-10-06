@@ -26,7 +26,7 @@ export class MyApp {
       {titulo:"Inicio",componente:HomePage,icon:"home"},
       {titulo:"Mi Perfil",componente:PerfilPage,icon:"person"},
       {titulo:"Productos",componente:ProductosPage,icon:"basket"},
-      {titulo:"Checkout",componente:CheckoutPage,icon:"information-circle"}
+      {titulo:"Checkout",componente:CheckoutPage,icon:"card"}
     ]
     this.afAuth.authState.subscribe(auth => {
       if(!auth) {
@@ -62,7 +62,7 @@ export class MyApp {
   }
   gotoPage(page){
     this.menu.close();
-    this.nav.setRoot(page);
+    this.nav.push(page);
   }
 
 }
