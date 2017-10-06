@@ -1,6 +1,12 @@
 <ion-menu id="sideMenu" [content]="nav" swipeEnables="false">
   <ion-content>
+
     <ion-list>
+
+      <button color="primary" ion-item (click)=gotoPage(page.componente)>
+         <ion-icon item-left name="cart"></ion-icon>
+        <carrito></carrito>
+      </button>
       <button color="primary" ion-item *ngFor="let page of pages" (click)=gotoPage(page.componente)>
         <ion-icon item-left name={{page.icon}}></ion-icon>
         {{page.titulo}}

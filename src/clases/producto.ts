@@ -11,9 +11,3 @@ export class Producto {
   peso:number;
   caracteristicas:string;
 }
-
-export class Data {
-  nombre:string;
-  descripcion:string;
-  precio:number;
-}

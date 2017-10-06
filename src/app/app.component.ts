@@ -7,6 +7,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { CarritoProvider } from '../providers/carrito/carrito';
+import { CarritoComponent } from '../components/carrito/carrito';
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -15,7 +19,7 @@ export class MyApp {
   rootPage:any = HomePage;
   pages:Array<{titulo:string,componente:any,icon:string}>
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menu:MenuController,private afAuth: AngularFireAuth) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public menu:MenuController,private afAuth: AngularFireAuth,private carritoService:CarritoProvider,private carritoComp:CarritoComponent) {
     this.menu.swipeEnable(true,"sideMenu");
     this.pages = [
       {titulo:"Inicio",componente:HomePage,icon:"home"},
@@ -24,10 +28,15 @@ export class MyApp {
       //{titulo:"Acerca de",componente:AcercaPage,icon:"information-circle"}
     ]
     this.afAuth.authState.subscribe(auth => {
-      if(!auth)
+      if(!auth) {
         this.rootPage = LoginPage;
-      else
+      } else {
+        this.carritoService.tieneCarrito(this.afAuth.auth.currentUser.uid);
+        this.carritoComp.uid= this.afAuth.auth.currentUser.uid;
         this.rootPage = HomePage;
+      }
+
+
     });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -37,6 +46,19 @@ export class MyApp {
     });
   }
 
+  ngOnInit(){
+    this.carritoService.agregarProducto$.subscribe(res => {
+      this.afAuth.authState.subscribe(auth => {
+        this.carritoService.getCarrito(auth.uid).then(res => {
+          for(let key in res){
+            this.carritoComp.carrito = res[key];
+            break;
+          }
+      });
+    });
+      console.log("se actualizo el carrito");
+    })
+  }
   gotoPage(page){
     this.menu.close();
     this.nav.setRoot(page);

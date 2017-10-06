@@ -25,6 +25,8 @@ import {
  Marker
 } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+import { CarritoProvider } from '../providers/carrito/carrito';
+import { CarritoComponent} from '../components/carrito/carrito';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2qjKQxPbLWtI2tnb4U8azGrm_aBrT6C4",
@@ -42,7 +44,8 @@ export const firebaseConfig = {
     ProductosPage,
     ContenidoModal,
     LoginPage,
-    PerfilPage
+    PerfilPage,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,9 @@ export const firebaseConfig = {
     GoogleMaps,
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ProductosServiceProvider
+    ProductosServiceProvider,
+    CarritoProvider,
+    CarritoComponent
   ]
 })
 export class AppModule {}

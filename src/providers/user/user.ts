@@ -17,4 +17,8 @@ export class UserProvider {
   getUser() {
     return this.af.authState;
   }
+
+  getUserId() {
+    return this.af.authState.toPromise();
+  }
 }

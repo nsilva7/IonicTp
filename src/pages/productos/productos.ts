@@ -3,8 +3,10 @@ import { IonicPage, NavController, NavParams, ModalController, Platform , ViewCo
 import { Firebase } from '@ionic-native/firebase';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Producto, Data } from '../productos/producto';
-import { ProductosServiceProvider } from '../../providers/productos-service/productos-service'
+import { Producto  } from '../../clases/producto';
+import { CarritoProvider } from '../../providers/carrito/carrito';
+import { ProductosServiceProvider } from '../../providers/productos-service/productos-service';
+import { Carrito, Item } from '../../clases/carrito';
 /**
  * Generated class for the ProductosPage page.
  *
@@ -67,7 +69,7 @@ template: `
           <img src={{foto}}>
         </ion-thumbnail>
       </ion-item>
-  
+
 
       <ion-item>
         <p>Descripcion: {{productoSeleccionado.descripcion}}</p>
@@ -87,6 +89,14 @@ template: `
       <ion-item>
         <p>Caracteristicas: <br>{{productoSeleccionado.caracteristicas}}</p>
       </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="cantidad" type="number" placeholder="cantidad"></ion-input>
+        </ion-item>
+        <ion-item>
+        <button ion-button (click)=agregarAlCarrito(productoSeleccionado,cantidad)>
+         hola
+      </button>
+      </ion-item>
       </ion-list>
   </ion-content>
 `
@@ -94,8 +104,9 @@ template: `
 export class ContenidoModal {
   productoSeleccionado;
   fotoActual;
+  cantidad;
   private lista = [];
-  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public params: NavParams,private psp: ProductosServiceProvider, public modalCtrl: ModalController) {
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public params: NavParams,private psp: ProductosServiceProvider,private carritoService:CarritoProvider, public modalCtrl: ModalController) {
     this.productoSeleccionado = this.params.data;
     this.fotoActual = this.productoSeleccionado.foto[0];
   }
@@ -104,6 +115,13 @@ export class ContenidoModal {
   }
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  agregarAlCarrito(producto,cantidad) {
+    let item = new Item();
+    item.cantidad = cantidad;
+    item.producto = producto;
+    this.carritoService.agregarAlCarrito(item);
   }
 
 }
